@@ -1,35 +1,47 @@
 <?php
 
-class Regisztral {
-    public function regisztral($csaladi_nev, $uto_nev, $bejelentkezes, $jelszo, $jogosultsag) {
-        try {
-            $conn = Database::getConnection();
-            
-            $sqlSelect = "SELECT id FROM felhasznalok WHERE bejelentkezes = :bejelentkezes";
-            $stmt = $conn->prepare($sqlSelect);
-            $stmt->execute(array(':bejelentkezes' => $bejelentkezes));
-
-            if ($stmt->fetch(PDO::FETCH_ASSOC)) {
-                return "A felhasználói név már foglalt!";
-            } else {
-                $sqlInsert = "INSERT INTO felhasznalok (id, csaladi_nev, uto_nev, bejelentkezes, jelszo, jogosultsag) 
-                              VALUES (0, :csaladi_nev, :uto_nev, :bejelentkezes, :jelszo, :jogosultsag)";
-                $stmt = $conn->prepare($sqlInsert);
-                $hashedPassword = password_hash($jelszo, PASSWORD_DEFAULT);
-                $stmt->execute(array(
-                    ':csaladi_nev' => $csaladi_nev,
-                    ':uto_nev' => $uto_nev,
-                    ':bejelentkezes' => $bejelentkezes,
-                    ':jelszo' => $hashedPassword,
-                    ':jogosultsag' => $jogosultsag
-                ));
-
-                $newId = $conn->lastInsertId();
-                return "A regisztráció sikeres. Azonosítója: {$newId}";
-            }
-        } catch (PDOException $e) {
-            return "Hiba történt: " . $e->getMessage();
-        }
-    }
+class Regisztral_Model {
+	public function get_data($vars): array {
+		$retData['eredmeny'] = "";
+		if (isset($vars['csaladi_nev'], $vars['utonev'], $vars['reg_login'], $vars['reg_pw'], $vars['reg_pw_confirm'])) {
+			if (!$vars['reg_pw'] = $vars['reg_pw_confirm']) {
+				$retData['eredmeny'] = "ERROR";
+				$retData['uzenet'] = "A jelszó és a jelszó megerősítése nem egyeznek!";
+			} else {
+				try {
+					$connection = Database::getConnection();
+					$sqlSelect = "select id from felhasznalok where bejelentkezes = :bejelentkezes";
+					$stmt = $connection->prepare($sqlSelect);
+					$stmt->execute(array(':bejelentkezes' => $vars['reg_login']));
+					if ($letezik = $stmt->fetch(PDO::FETCH_ASSOC)) {
+						$retData['eredmeny'] = "ERROR";
+						$retData['uzenet'] = "Ilyen felhasználó már létezik. Próbáljon másikat!";
+					} else {
+						$sqlInsert = "insert into felhasznalok(id, csaladi_nev, utonev, bejelentkezes, jelszo, jogosultsag) 
+										values (0, :csaladi_nev, :utonev, :bejelentkezes, :jelszo, :jogosultsag)";
+						$stmt = $connection->prepare($sqlInsert);
+						$stmt->execute(array(
+										   ':csaladi_nev' => $vars['csaladi_nev'],
+										   ':utonev' => $vars['utonev'],
+										   ':bejelentkezes' => $vars['reg_login'],
+										   ':jelszo' => sha1($vars['reg_pw']),
+										   ':jogosultsag' => '_1_'
+									   ));
+						if ($darab = $stmt->rowCount()) {
+							$uj_id = $connection->lastInsertId();
+							$retData['uzenet'] = "Sikeres regisztráció.<br>Azonosítója: $uj_id<br>
+								Felhasználónevével és jelszavával beléphet a \"Belépés\" menüpont alatt";
+						} else {
+							$retData['eredmeny'] = "ERROR";
+							$retData['uzenet'] = "Sikertelen regisztráció";
+						}
+					}
+				} catch (PDOException $e) {
+					$retData['eredmeny'] = "ERROR";
+					$retData['uzenet'] = "Hiba: " . $e->getMessage();
+				}
+			}
+		}
+		return $retData;
+	}
 }
-?>

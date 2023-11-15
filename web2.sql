@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`id`, `csaladi_nev`, `utonev`, `bejelentkezes`, `jelszo`, `jogosultsag`) VALUES
-(1, 'Rendszer', 'Admin', 'Admin', sha1('admin'), '__1'),
-(2, 'Családi_2', 'Utónév_2', 'Login2', sha1('login2'), '_1_'),
+(1, 'Rendszer', 'Admin', 'Admin', sha1('Admin11!!'), '__1'),
+(2, 'Családi_2', 'Utónév_2', 'Login2', sha1('Login222!!'), '_1_'),
 (3, 'Családi_3', 'Utónév_3', 'Login3', sha1('login3'), '_1_'),
 (4, 'Családi_4', 'Utónév_4', 'Login4', sha1('login4'), '_1_'),
 (5, 'Családi_5', 'Utónév_5', 'Login5', sha1('login5'), '_1_'),
@@ -74,15 +74,14 @@ CREATE TABLE IF NOT EXISTS `menu` (
 --
 
 INSERT INTO `menu` (`url`, `nev`, `szulo`, `jogosultsag`, `sorrend`) VALUES
-('admin', 'Admin', '', '001', 90),
+('admin', 'Admin', '', '001', 80),
 ('alapinfok', 'Alapinfók', 'elerhetoseg', '111', 40),
 ('belepes', 'Belépés', '', '100', 60),
 ('elerhetoseg', 'Elérhetőség', '', '111', 20),
 ('kiegeszitesek', 'Kiegészítések', 'elerhetoseg', '011', 50),
-('kilepes', 'Kilépés', '', '011', 80),
+('kilepes', 'Kilépés', '', '011', 70),
 ('linkek', 'Linkek', '', '100', 30),
-('nyitolap', 'Nyitólap', '', '111', 10),
-('regisztral', 'Regisztráció', '', '100', 70);
+('nyitolap', 'Nyitólap', '', '111', 10);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
