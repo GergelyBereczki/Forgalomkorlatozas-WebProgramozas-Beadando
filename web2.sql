@@ -67,7 +67,10 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `jogosultsag` varchar(3) NOT NULL,
   `sorrend` tinyint(4) NOT NULL,
   PRIMARY KEY (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- Nem biztos hogy kell a COLLATE
+ 
 
 --
 -- A tábla adatainak kiíratása `menu`
@@ -77,12 +80,55 @@ INSERT INTO `menu` (`url`, `nev`, `szulo`, `jogosultsag`, `sorrend`) VALUES
 ('admin', 'Admin', '', '001', 80),
 ('alapinfok', 'Alapinfók', 'elerhetoseg', '111', 40),
 ('belepes', 'Belépés', '', '100', 60),
-('elerhetoseg', 'Elérhetőség', '', '111', 20),
+('elerhetoseg', 'Elérhetőség', '', '111', 30),
 ('kiegeszitesek', 'Kiegészítések', 'elerhetoseg', '011', 50),
 ('kilepes', 'Kilépés', '', '011', 70),
-('linkek', 'Linkek', '', '100', 30),
+('hirek', 'Hírek', '111', 20),
 ('nyitolap', 'Nyitólap', '', '111', 10);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+--
+-- Tábla szerkezet ehhez a táblához `hirek`
+--
+
+CREATE TABLE `hirek` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `userid` int(10) UNSIGNED NOT NULL,
+  `datum` timestamp NOT NULL DEFAULT current_timestamp(),
+  `hir` text NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `hirek`
+--
+
+INSERT INTO `hirek` (`id`, `userid`, `datum`, `hir`) VALUES
+(1, 1, '2023-11-15 21:00:00', 'teszthír'),
+(2, 2, '2023-11-15 21:25:38', 'teszthír 2'),
+(3, 1, '2023-11-15 21:38:22', 'Beküldött hír 1');
+
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `kommentek`
+--
+
+CREATE TABLE `kommentek` (
+  `id` int(10) UNSIGNED NOT NULL, AUTO_INCREMENT, AUTO_INCREMENT=15,
+  `userid` int(10) UNSIGNED NOT NULL,
+  `hirid` int(10) UNSIGNED NOT NULL,
+  `datum` timestamp NOT NULL DEFAULT current_timestamp(),
+  `komment` tinytext NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `kommentek`
+--
+
+INSERT INTO `kommentek` (`id`, `userid`, `hirid`, `datum`, `komment`) VALUES
+(1, 3, 1, '2023-11-15 19:28:34', 'tesztkomment1');
