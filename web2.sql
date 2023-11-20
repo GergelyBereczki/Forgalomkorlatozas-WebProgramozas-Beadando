@@ -83,7 +83,7 @@ INSERT INTO `menu` (`url`, `nev`, `szulo`, `jogosultsag`, `sorrend`) VALUES
 ('elerhetoseg', 'Elérhetőség', '', '111', 30),
 ('kiegeszitesek', 'Kiegészítések', 'elerhetoseg', '011', 50),
 ('kilepes', 'Kilépés', '', '011', 70),
-('hirek', 'Hírek', '111', 20),
+('hirek', 'Hírek', '', '111', 20),
 ('nyitolap', 'Nyitólap', '', '111', 10);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
@@ -119,7 +119,7 @@ INSERT INTO `hirek` (`id`, `userid`, `datum`, `hir`) VALUES
 --
 
 CREATE TABLE `kommentek` (
-  `id` int(10) UNSIGNED NOT NULL, AUTO_INCREMENT, AUTO_INCREMENT=15,
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `userid` int(10) UNSIGNED NOT NULL,
   `hirid` int(10) UNSIGNED NOT NULL,
   `datum` timestamp NOT NULL DEFAULT current_timestamp(),
