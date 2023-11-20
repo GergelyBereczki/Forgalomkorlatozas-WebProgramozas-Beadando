@@ -132,3 +132,4 @@ CREATE TABLE `kommentek` (
 
 INSERT INTO `kommentek` (`id`, `userid`, `hirid`, `datum`, `komment`) VALUES
 (1, 3, 1, '2023-11-15 19:28:34', 'tesztkomment1');
+
