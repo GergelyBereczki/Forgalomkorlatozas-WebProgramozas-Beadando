@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `varosok`
 --
-CREATE DATABASE IF NOT EXISTS `web2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `varosok` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `varosok`;
 
 -- --------------------------------------------------------
