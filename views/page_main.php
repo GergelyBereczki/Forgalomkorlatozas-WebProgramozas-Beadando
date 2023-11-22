@@ -43,7 +43,7 @@
     <br><br><br>
 
     <!--Footer megjelenítése.-->
-    <div class="jumbotron text-center" style="margin-bottom:0; margin-top:0;  ">
+    <div style="margin-bottom:0; margin-top:0;">
         <footer id="lab">
             &copy; Bagó Bence, Bereczki Gergely <?= date("Y") ?>
         </footer>
