@@ -2,11 +2,19 @@
 
 class Elerhetoseg_alapinfok_Controller
 {
-	public $baseName = 'elerhetoseg_alapinfok';  //meghatározni, hogy melyik oldalon vagyunk
-	public function main(array $vars) // a router által továbbított paramétereket kapja
+	public $baseName = 'elerhetoseg_alapinfok';  //meghatï¿½rozni, hogy melyik oldalon vagyunk
+	public function main(array $vars) // a router ï¿½ltal tovï¿½bbï¿½tott paramï¿½tereket kapja
 	{
-		//betöltjük a nézetet
+
+		$MnbModel = new Mnb_Model;
+        $retData = $MnbModel->mnb_currency($vars);
+        $this->baseName = "elerhetoseg_alapinfok";
+
+		//betï¿½ltjï¿½k a nï¿½zetet
 		$view = new View_Loader($this->baseName."_main");
+
+		foreach($retData as $name => $value)
+            $view->assign($name, $value);
 	}
 }
 
