@@ -1,6 +1,6 @@
 <?php
 $ablakcim = array(
-    'cim' => 'Forgalom korlátozás',
+    'cim' => 'Forgalomkorlátozás',
 );
 
 $fejlec = array(
